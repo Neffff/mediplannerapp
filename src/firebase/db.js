@@ -12,3 +12,6 @@ export const onceGetUsers = () =>
   db.ref('users').once('value');
 
 // Other Entity APIs ...
+
+export const onceGetDoctors = () =>
+  db.ref('doctors').once('value');

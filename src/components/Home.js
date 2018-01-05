@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
 import withAuthorization from './withAuthorization';
 import DoctorCard from './DoctorCard';
 import { db } from '../firebase';
-
+import '../styles/home.css';
 
 class HomePage extends Component {
   constructor(props) {
@@ -11,24 +10,44 @@ class HomePage extends Component {
 
     this.state = {
       users: null,
+      doctors: null,
+      example: 'somethingpassed'
     };
   }
-
   componentDidMount() {
     db.onceGetUsers().then(snapshot =>
       this.setState(() => ({ users: snapshot.val() }))
     );
+    
+    db.onceGetDoctors().then(snapshot =>
+    this.setState(() => ({doctors: snapshot.val()} ))
+  );
   }
-
+//   componentDidUpdate() {
+//     // console.log(this.state.doctors);
+//     // console.log(this.state.users);
+//   }
+//   componentWillReceiveProps(nextProps) {
+//     console.log(nextProps);
+//  }
   render() {
-    const { users } = this.state;
+   
+
+    const { users, doctors } = this.state;
+    
+   
+
     return (
       <div>
-        <h1>Home</h1>
-        <DoctorCard />
-        <p>The Home Page is accessible by every signed in user.</p>
+        <h1 className="home__h1">Wybierz lekarza i umów się na wizytę</h1>
+        <div className="home__cards">
+    {!!doctors && <DoctorCard example={this.state.example} doctors={doctors}/>}
+</div>
+
+         <p>The Home Page is accessible by every signed in user.</p>
 
         { !!users && <UserList users={users} /> }
+
       </div>
     );
   }
@@ -42,6 +61,7 @@ const UserList = ({ users }) =>
     {Object.keys(users).map(key =>
       <div key={key}>{users[key].username}</div>
     )}
+    
   </div>
 
 const authCondition = (authUser) => !!authUser;

@@ -1,0 +1,26 @@
+.card__container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.card__doctor {
+    margin: 20px;
+    max-width: 300px;
+    min-width: 200px;
+}
+.card__avatar {
+    min-width: 100px;
+    min-height: 100px;
+    margin: 30px auto;
+    top: 20px;
+}
+.card__doctor h2 {
+    text-align: center;
+}
+.card__doctor p {
+    margin-top: 10px;
+    text-align: center;
+}
+.card__doctor button {
+    margin: 0 auto;
+}
