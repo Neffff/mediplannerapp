@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 import withAuthorization from './withAuthorization';
+import DoctorCard from './DoctorCard';
 import { db } from '../firebase';
+
 
 class HomePage extends Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class HomePage extends Component {
     return (
       <div>
         <h1>Home</h1>
+        <DoctorCard />
         <p>The Home Page is accessible by every signed in user.</p>
 
         { !!users && <UserList users={users} /> }
@@ -33,7 +36,7 @@ class HomePage extends Component {
 
 const UserList = ({ users }) =>
   <div>
-    <h2>List of Usernames of Users</h2>
+    <h2>Lista nazw użytkowników:</h2>
     <p>(Saved on Sign Up in Firebase Database)</p>
 
     {Object.keys(users).map(key =>

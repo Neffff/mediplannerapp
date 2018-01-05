@@ -79,28 +79,28 @@ class SignUpForm extends Component {
           value={username}
           onChange={event => this.setState(byPropKey('username', event.target.value))}
           type="text"
-          placeholder="Full Name"
+          placeholder="Imię i nazwisko"
         />
         <input
           value={email}
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
-          placeholder="Email Address"
+          placeholder="Adres E-mail"
         />
         <input
           value={passwordOne}
           onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
           type="password"
-          placeholder="Password"
+          placeholder="Hasło"
         />
         <input
           value={passwordTwo}
           onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
           type="password"
-          placeholder="Confirm Password"
+          placeholder="Potwierdź hasło"
         />
         <button disabled={isInvalid} type="submit">
-          Sign Up
+          Zarejestruj się
         </button>
 
         { error && <p>{error.message}</p> }
@@ -111,9 +111,9 @@ class SignUpForm extends Component {
 
 const SignUpLink = () =>
   <p>
-    Don't have an account?
+    Nie masz konta?
     {' '}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
+    <Link to={routes.SIGN_UP}>Zarejestruj się</Link>
   </p>
 
 export default withRouter(SignUpPage);

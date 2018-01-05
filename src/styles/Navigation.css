@@ -1,0 +1,27 @@
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+}
+ul li {
+    margin-left:20px;
+}
+ul li a {
+    text-decoration: none;
+}
+.logo {
+    font-size: 30px;
+}
+
+.menu__container header h2 {
+display: flex;
+flex: 0 0 100%;
+flex-direction: row;
+justify-content: space-around;
+}
+.menu__container header h2 p {
+    align-self: flex-start;
+}
+.menu__container header h2 ul {
+    align-self: flex-end;
+}
