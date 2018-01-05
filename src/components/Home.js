@@ -10,8 +10,7 @@ class HomePage extends Component {
 
     this.state = {
       users: null,
-      doctors: null,
-      example: 'somethingpassed'
+      doctors: null
     };
   }
   componentDidMount() {
@@ -41,7 +40,7 @@ class HomePage extends Component {
       <div>
         <h1 className="home__h1">Wybierz lekarza i umów się na wizytę</h1>
         <div className="home__cards">
-    {!!doctors && <DoctorCard example={this.state.example} doctors={doctors}/>}
+    {!!doctors && <DoctorCard doctors={doctors}/>}
 </div>
 
          <p>The Home Page is accessible by every signed in user.</p>

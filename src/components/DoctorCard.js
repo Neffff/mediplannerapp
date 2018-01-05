@@ -6,18 +6,6 @@ import Avatar from 'material-ui/Avatar';
 import '../styles/DoctorCard.css'
 
 class DoctorCard extends Component {
-    constructor(props) {
-        super(props);
-        // this.state = {
-        //     doctors: null
-        // }
-    }
-
-    // componentWillReceiveProps(nextProps) {
-    //     console.log(nextProps);
-    //     this.setState({ doctors: nextProps.value });
-    //     console.log(this.state.doctors);  
-    //  }
     render() {
         const { doctors } = this.props;
     
