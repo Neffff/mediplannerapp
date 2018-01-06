@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
@@ -27,9 +28,16 @@ class DoctorCard extends Component {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button dense color="primary">
+        <Link to={{
+          pathname: `/home/${key}`,
+          state: { doctorId: `${key}`,
+          doctorName: `${doctors[key].name}`,
+          doctorRole: `${doctors[key].role}`,
+          doctorAvatar: `${doctors[key].avatar}`
+        } 
+          }}><Button dense color="primary">
           Umów się na wizyte
-        </Button>
+        </Button></Link>
       </CardActions>
     </Card>
     )

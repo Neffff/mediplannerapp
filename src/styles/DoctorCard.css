@@ -21,7 +21,8 @@
     margin-top: 10px;
     text-align: center;
 }
-.card__doctor button {
+.card__doctor a{
+    text-decoration: none;
     margin: 0 auto;
-bottom: 0;
+    bottom: 0;
 }

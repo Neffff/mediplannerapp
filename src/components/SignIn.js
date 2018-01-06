@@ -5,6 +5,8 @@ import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+import Input from 'material-ui/Input';
+import Button from 'material-ui/Button';
 
 const SignInPage = ({ history }) =>
   <div>
@@ -66,21 +68,24 @@ class SignInForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <Input
           value={email}
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Adres E-mail"
         />
-        <input
+        <Input
           value={password}
           onChange={event => this.setState(byPropKey('password', event.target.value))}
           type="password"
           placeholder="Hasło"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button 
+        raised color="primary" 
+        disabled={isInvalid} 
+        type="submit">
           Zaloguj
-        </button>
+        </Button>
 
         { error && <p>{error.message}</p> }
       </form>

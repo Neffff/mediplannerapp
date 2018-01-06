@@ -12,6 +12,7 @@ const SignUpPage = ({ history }) =>
 const INITIAL_STATE = {
     username: '',
     email: '',
+    phone: '',
     passwordOne: '',
     passwordTwo: '',
     error: null,
@@ -32,6 +33,7 @@ class SignUpForm extends Component {
       const {
         username,
         email,
+        phone,
         passwordOne,
       } = this.state;
   
@@ -42,7 +44,7 @@ class SignUpForm extends Component {
       auth.doCreateUserWithEmailAndPassword(email, passwordOne)
         .then(authUser => {        
             // Create a user in your own accessible Firebase Database too
-            db.doCreateUser(authUser.uid, username, email)
+            db.doCreateUser(authUser.uid, username, email, phone)
               .then(() => {
                 this.setState(() => ({ ...INITIAL_STATE }));
                 history.push(routes.HOME);
@@ -62,6 +64,7 @@ class SignUpForm extends Component {
     const {
       username,
       email,
+      phone,
       passwordOne,
       passwordTwo,
       error,
@@ -71,7 +74,8 @@ class SignUpForm extends Component {
     passwordOne !== passwordTwo ||
     passwordOne === '' ||
     email === '' ||
-    username === '';
+    username === '' ||
+    phone === '';
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -86,6 +90,12 @@ class SignUpForm extends Component {
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Adres E-mail"
+        />
+        <input
+          value={phone}
+          onChange={event => this.setState(byPropKey('phone', event.target.value))}
+          type="text"
+          placeholder="Numer telefonu"
         />
         <input
           value={passwordOne}

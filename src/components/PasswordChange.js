@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import Input from 'material-ui/Input';
+import Button from 'material-ui/Button';
 import { auth } from '../firebase';
 
 const byPropKey = (propertyName, value) => () => ({
@@ -46,21 +47,24 @@ class PasswordChangeForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <Input
           value={passwordOne}
           onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
           type="password"
           placeholder="Nowe hasło"
         />
-        <input
+        <Input
           value={passwordTwo}
           onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
           type="password"
           placeholder="Potwierdź nowe hasło"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button 
+        raised color="primary"
+        disabled={isInvalid} 
+        type="submit">
           Zresetuj moje hasło
-        </button>
+        </Button>
 
         { error && <p>{error.message}</p> }
       </form>

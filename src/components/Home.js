@@ -22,20 +22,8 @@ class HomePage extends Component {
     this.setState(() => ({doctors: snapshot.val()} ))
   );
   }
-//   componentDidUpdate() {
-//     // console.log(this.state.doctors);
-//     // console.log(this.state.users);
-//   }
-//   componentWillReceiveProps(nextProps) {
-//     console.log(nextProps);
-//  }
   render() {
-   
-
     const { users, doctors } = this.state;
-    
-   
-
     return (
       <div>
         <h1 className="home__h1">Wybierz lekarza i umów się na wizytę</h1>
