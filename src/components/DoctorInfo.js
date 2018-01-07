@@ -23,7 +23,7 @@ const events = [
 const minTime = new Date();
     minTime.setHours(8,0,0);
     const maxTime = new Date();
-    maxTime.setHours(18,1,0);
+    maxTime.setHours(18,0,0);
 
 class DoctorInfo extends Component {
     
@@ -38,7 +38,7 @@ class DoctorInfo extends Component {
                 allDay: 'cały dzień',
                 next:">",
                 previous:"<",
-                today:"dzisiaj",
+                today:"Dzisiaj",
                 month: "miesiąc",
                 week: "tydzień",
                 day: "dzień",
@@ -69,6 +69,9 @@ var backgroundColor = '#' + 'EFACAE';
         style: style
     };
   }
+  selectBigCalendarSlot(e) {
+      alert('aaa');
+  }
     render() {
         return (        
 <div className="info__container">
@@ -79,8 +82,16 @@ var backgroundColor = '#' + 'EFACAE';
  <BigCalendar
         events={events}
         messages={this.state.messages}
+        selectable={'ignoreEvents'}
+        // onSelecting={(e) => false}
+        // businessHours={[{
+        //             dow: [0, 1, 2, 3, 4, 5, 6], // Sunday, Monday, Tuesday, Wednesday...
+        //             start: "08:30", // 8am
+        //             end: "12:30" // 12pm
+        //           }]}
         min={minTime}
         max={maxTime}
+        // dayPropGetter={}
         // onNavigate={(date, view) => {
         //     console.log('#### onNavigate');
         //     console.log('#### date=', date);
@@ -90,6 +101,7 @@ var backgroundColor = '#' + 'EFACAE';
         startAccessor='start'
         endAccessor='end'
        eventPropGetter={(this.eventStyleGetter)}
+       onSelectSlot={() => this.selectBigCalendarSlot()}
       />
 </div>
 )
