@@ -8,7 +8,7 @@ import '../styles/DoctorCard.css'
 
 class DoctorCard extends Component {
     render() {
-        const { doctors } = this.props;
+        const { doctors, events } = this.props;
     
     return (        
 <div className="card__container">
@@ -33,7 +33,10 @@ class DoctorCard extends Component {
           state: { doctorId: `${key}`,
           doctorName: `${doctors[key].name}`,
           doctorRole: `${doctors[key].role}`,
-          doctorAvatar: `${doctors[key].avatar}`
+          doctorAvatar: `${doctors[key].avatar}`,
+          // doctorEventTitle: `${doctors[key].events.title}`,
+          // doctorEventStart: `${doctors[key].events.start}`,
+          // doctorEventEnd: `${doctors[key].events.end}`
         } 
           }}><Button dense color="primary">
           Umów się na wizyte

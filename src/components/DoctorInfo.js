@@ -4,7 +4,7 @@ import moment from 'moment';
 import localization from 'moment/locale/pl'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import '../styles/DoctorInfo.css'
-//import { db } from '../firebase';
+import { db } from '../firebase';
 
 BigCalendar.momentLocalizer(moment);
 const events = [
@@ -31,6 +31,8 @@ class DoctorInfo extends Component {
         super(props);
     
         this.state = {
+            currentID: null,
+            dbevents: null,
              messages:  {
                 date: 'Data',
                 time: 'Teraz',
@@ -46,17 +48,23 @@ class DoctorInfo extends Component {
             }
         };
       }
-componentWillReceiveProps() {
 
-}
 componentDidMount() {
-    // const { location } = this.props
-//  db.onceGetDoctors().then(snapshot =>
-//  this.setState(() => ({doctors: snapshot.val()} ))
-//   );
+    this.setState(() => ({ currentID: this.props.location.state.doctorId}))
+    db.onceGetEvents().then(snapshot =>
+        this.setState(() => ({ dbevents: snapshot.val()} ))
+      );
+      
+      
+
   }
+// componentDidMount() {
+//     // const { location } = this.props
+// //  db.onceGetDoctors().then(snapshot =>
+// //  this.setState(() => ({doctors: snapshot.val()} ))
+// //   );
+//   }
   eventStyleGetter(event, start, end, isSelected) {
-console.log(event);
 var backgroundColor = '#' + 'EFACAE';
     var style = {
         backgroundColor: backgroundColor,
@@ -72,13 +80,26 @@ var backgroundColor = '#' + 'EFACAE';
   selectBigCalendarSlot(e) {
       alert('aaa');
   }
+
     render() {
+        const { dbevents, currentID } = this.state;
         return (        
 <div className="info__container">
  <p>Doctor Info {this.props.location.state.doctorId} 
  {this.props.location.state.doctorName} 
  {this.props.location.state.doctorRole} 
- {this.props.location.state.doctorAvatar}</p>
+ {this.props.location.state.doctorAvatar}
+ {/* {this.props.location.state.doctorEventTitle}
+ {this.props.location.state.doctorEventStart}
+ {this.props.location.state.doctorEventEnd} */}
+ {Object.keys(dbevents||{}).map((key) => {
+     <p key={key}> {key} </p>
+ })}
+ {this.state.dbevents && Object.keys(this.state.dbevents).map(dbeventID => (
+        dbeventID === currentID && console.log(dbevents[dbeventID])),
+        
+        )}
+ </p>
  <BigCalendar
         events={events}
         messages={this.state.messages}

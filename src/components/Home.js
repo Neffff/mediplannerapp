@@ -10,7 +10,8 @@ class HomePage extends Component {
 
     this.state = {
       users: null,
-      doctors: null
+      doctors: null,
+      events: null
     };
   }
   componentDidMount() {
@@ -19,16 +20,19 @@ class HomePage extends Component {
     );
     
     db.onceGetDoctors().then(snapshot =>
-    this.setState(() => ({doctors: snapshot.val()} ))
+    this.setState(() => ({ doctors: snapshot.val()} ))
+  );
+  db.onceGetEvents().then(snapshot =>
+    this.setState(() => ({ events: snapshot.val()} ))
   );
   }
   render() {
-    const { users, doctors } = this.state;
+    const { users, doctors, events } = this.state;
     return (
       <div>
         <h1 className="home__h1">Wybierz lekarza i umów się na wizytę</h1>
         <div className="home__cards">
-    {!!doctors && <DoctorCard doctors={doctors}/>}
+    {!!doctors && <DoctorCard doctors={doctors} events={events}/>}
 </div>
 
          <p>The Home Page is accessible by every signed in user.</p>

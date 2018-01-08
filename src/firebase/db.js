@@ -16,3 +16,6 @@ export const onceGetUsers = () =>
 
 export const onceGetDoctors = () =>
   db.ref('doctors').once('value');
+
+  export const onceGetEvents = () =>
+  db.ref('events').once('value');
