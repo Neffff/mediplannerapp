@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 
 import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
+import Input from 'material-ui/Input';
+import Button from 'material-ui/Button';
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -79,39 +81,42 @@ class SignUpForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-         <input
+         <Input
           value={username}
           onChange={event => this.setState(byPropKey('username', event.target.value))}
           type="text"
           placeholder="Imię i nazwisko"
         />
-        <input
+        <Input
           value={email}
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Adres E-mail"
         />
-        <input
+        <Input
           value={phone}
           onChange={event => this.setState(byPropKey('phone', event.target.value))}
           type="text"
           placeholder="Numer telefonu"
         />
-        <input
+        <Input
           value={passwordOne}
           onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
           type="password"
           placeholder="Hasło"
         />
-        <input
+        <Input
           value={passwordTwo}
           onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
           type="password"
           placeholder="Potwierdź hasło"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button 
+        raised color="primary"
+        disabled={isInvalid} 
+        type="submit">
           Zarejestruj się
-        </button>
+        </Button>
 
         { error && <p>{error.message}</p> }
       </form>

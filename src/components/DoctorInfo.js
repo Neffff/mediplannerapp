@@ -29,7 +29,6 @@ class DoctorInfo extends Component {
         this.state = {
             currentID: null,
             dbevents: null,
-            minTime: null,
              messages:  {
                 date: 'Data',
                 time: 'Teraz',
@@ -60,7 +59,6 @@ componentDidMount() {
     //   this.state.dbevents && Object.keys(this.state.dbevents).map(dbeventID => (
     //     dbeventID === this.state.currentID && console.log(Object.values(this.state.dbevents[dbeventID]))
     //   )) 
-    console.log(this.state.currentID);
   }
   eventStyleGetter(event, start, end, isSelected) {
 var backgroundColor = '#' + 'EFACAE';
@@ -91,13 +89,21 @@ var backgroundColor = '#' + 'EFACAE';
  {/* {this.props.location.state.doctorEventTitle}
  {this.props.location.state.doctorEventStart}
  {this.props.location.state.doctorEventEnd} */}
- {this.state.dbevents && Object.keys(this.state.dbevents).map(dbeventID => (
-    dbeventID === currentID && console.log(Object.values(dbevents[dbeventID]))
+ {dbevents && Object.keys(dbevents).map(dbeventID => (
+    dbeventID === currentID && Object.values(dbevents[dbeventID]).forEach((item, index) => {
+        item.end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s')),
+        item.start = new Date(moment(item.start, 'YYYY-M-DD-H-m-s'))
+    
+    })
   ) )
   }
+  {console.log(dbevents)}
+  {/* {console.log((dbevents && Object.keys(dbevents).map(id => 
+    (id === currentID && console.log(dbevents[id])))))} */}
  </p>
  <BigCalendar
-        events={events}
+        events={dbevents ? Object.keys(dbevents).map(id => 
+            (id === currentID && console.log(dbevents[id]))) : events}
         messages={this.state.messages}
         selectable={'ignoreEvents'}
         // onSelecting={(e) => false}
