@@ -7,17 +7,13 @@ import '../styles/DoctorInfo.css'
 import { db } from '../firebase';
 
 BigCalendar.momentLocalizer(moment);
-const events = [
+let events = [
     {
       'title': 'Zajęty termin',
-      'start': new Date(2018, 0, 4, 9, 0, 0),
-      'end': new Date(2018, 0, 4, 9, 30, 0)
-    },
-    {
-      'title': 'Long Event',
-      'start': new Date(2018, 0, 20),
-      'end': new Date(2018, 0, 20)
+      'start': '2018-1-5-9-30-0',
+      'end': '2018-1-5-10-0-0'
     }
+
 ]
 
 const minTime = new Date();
@@ -29,10 +25,11 @@ class DoctorInfo extends Component {
     
     constructor(props) {
         super(props);
-    
+
         this.state = {
             currentID: null,
             dbevents: null,
+            minTime: null,
              messages:  {
                 date: 'Data',
                 time: 'Teraz',
@@ -54,16 +51,17 @@ componentDidMount() {
     db.onceGetEvents().then(snapshot =>
         this.setState(() => ({ dbevents: snapshot.val()} ))
       );
-      
-      
 
+      events.forEach((item, index) => {
+          events[index].end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s')),
+          events[index].start = new Date(moment(item.start, 'YYYY-M-DD-H-m-s'));
+      })
+      console.log(events);
+    //   this.state.dbevents && Object.keys(this.state.dbevents).map(dbeventID => (
+    //     dbeventID === this.state.currentID && console.log(Object.values(this.state.dbevents[dbeventID]))
+    //   )) 
+    console.log(this.state.currentID);
   }
-// componentDidMount() {
-//     // const { location } = this.props
-// //  db.onceGetDoctors().then(snapshot =>
-// //  this.setState(() => ({doctors: snapshot.val()} ))
-// //   );
-//   }
   eventStyleGetter(event, start, end, isSelected) {
 var backgroundColor = '#' + 'EFACAE';
     var style = {
@@ -83,6 +81,7 @@ var backgroundColor = '#' + 'EFACAE';
 
     render() {
         const { dbevents, currentID } = this.state;
+        
         return (        
 <div className="info__container">
  <p>Doctor Info {this.props.location.state.doctorId} 
@@ -92,27 +91,18 @@ var backgroundColor = '#' + 'EFACAE';
  {/* {this.props.location.state.doctorEventTitle}
  {this.props.location.state.doctorEventStart}
  {this.props.location.state.doctorEventEnd} */}
- {Object.keys(dbevents||{}).map((key) => {
-     <p key={key}> {key} </p>
- })}
  {this.state.dbevents && Object.keys(this.state.dbevents).map(dbeventID => (
-        dbeventID === currentID && console.log(dbevents[dbeventID])),
-        
-        )}
+    dbeventID === currentID && console.log(Object.values(dbevents[dbeventID]))
+  ) )
+  }
  </p>
  <BigCalendar
         events={events}
         messages={this.state.messages}
         selectable={'ignoreEvents'}
         // onSelecting={(e) => false}
-        // businessHours={[{
-        //             dow: [0, 1, 2, 3, 4, 5, 6], // Sunday, Monday, Tuesday, Wednesday...
-        //             start: "08:30", // 8am
-        //             end: "12:30" // 12pm
-        //           }]}
         min={minTime}
         max={maxTime}
-        // dayPropGetter={}
         // onNavigate={(date, view) => {
         //     console.log('#### onNavigate');
         //     console.log('#### date=', date);

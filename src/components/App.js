@@ -10,7 +10,7 @@ import HomePage from './Home';
 import AccountPage from './Account';
 import DoctorInfo from './DoctorInfo';
 import * as routes from '../constants/routes';
-import { firebase } from '../firebase';
+//import { firebase } from '../firebase';
 import withAuthentication from './withAuthentication';
 const App = () =>
   <Router>
