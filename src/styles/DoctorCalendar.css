@@ -1,3 +1,6 @@
 .info__container {
     height: 700px;
 }
+.calendar_placeholder {
+    top: 20px;
+}

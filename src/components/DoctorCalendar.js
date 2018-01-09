@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import { OffCanvas, OffCanvasMenu, OffCanvasBody } from 'react-offcanvas';
+import DoctorPlaceholder from './DoctorPlaceholder';
 import moment from 'moment';
 import localization from 'moment/locale/pl'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -67,7 +68,6 @@ var backgroundColor = '#' + 'EFACAE';
     this.setState({ isMenuOpened: true });
     addedEvents.push(slotInfo.start);
     addedEvents.push(slotInfo.end);
-    
   }
   handleClickBack() {
     // toggles the menu opened state
@@ -120,17 +120,8 @@ var backgroundColor = '#' + 'EFACAE';
         onSelectSlot={this.selectBigCalendarSlot}
       />
         </OffCanvasBody>
-        <OffCanvasMenu className={"my_menu_class"}>
-          <p>Placeholder content.</p>
-          <ul>
-          <li onClick={this.handleClickBack.bind(this)}>Toggle Menu</li>
-            <li>Link 1</li>
-            <li>Link 2</li>
-            <li>Link 3</li>
-            <li>Link 4</li>
-            <li>Link 5</li>
-            
-          </ul>
+        <OffCanvasMenu className={"calendar_placeholder"} style={{top: '180px', padding: '20px', boxSizing: 'border-box'}}>
+          <DoctorPlaceholder handleClickBack={this.handleClickBack} />
         </OffCanvasMenu>
       </OffCanvas>
 </div>
