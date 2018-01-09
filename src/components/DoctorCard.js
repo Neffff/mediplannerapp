@@ -8,7 +8,7 @@ import '../styles/DoctorCard.css'
 
 class DoctorCard extends Component {
     render() {
-        const { doctors, events } = this.props;
+        const { doctors } = this.props;
     
     return (        
 <div className="card__container">
