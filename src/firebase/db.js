@@ -17,5 +17,11 @@ export const onceGetUsers = () =>
 export const onceGetDoctors = () =>
   db.ref('doctors').once('value');
 
-  export const onceGetEvents = () =>
+export const onceGetEvents = () =>
   db.ref('events').once('value');
+
+export const doCreateEvent = (id, key, start, end) => 
+  db.ref(`events/${id}/${key}`).set({
+    start,
+    end
+  });

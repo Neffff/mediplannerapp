@@ -9,7 +9,6 @@ import '../styles/DoctorCalendar.css'
 import { db } from '../firebase';
 
 BigCalendar.momentLocalizer(moment);
-const addedEvents = []
 
 const minTime = new Date();
     minTime.setHours(8,0,0);
@@ -23,6 +22,8 @@ class DoctorCalendar extends Component {
         this.state = {
             isMenuOpened: false,
             dbevents: null,
+            slotInfoStart: null,
+            slotInfoEnd: null,
              messages:  {
                 date: 'Data',
                 time: 'Teraz',
@@ -51,6 +52,11 @@ componentDidMount() {
         this.setState(() => ({ dbevents: snapshot.val()} ))
       )
   }
+  componentDidUpdate() {
+    db.onceGetEvents().then(snapshot =>
+      this.setState(() => ({ dbevents: snapshot.val()} ))
+    )
+  }
   eventStyleGetter(event, start, end, isSelected) {
 var backgroundColor = '#' + 'EFACAE';
     var style = {
@@ -66,15 +72,15 @@ var backgroundColor = '#' + 'EFACAE';
   }
   selectBigCalendarSlot(slotInfo) {
     this.setState({ isMenuOpened: true });
-    addedEvents.push(slotInfo.start);
-    addedEvents.push(slotInfo.end);
+    this.setState({ slotInfoStart: slotInfo.start});
+    this.setState({ slotInfoEnd: slotInfo.end});
   }
   handleClickBack() {
     // toggles the menu opened state
     this.setState({ isMenuOpened: false });
   }
     render() {
-        const { dbevents } = this.state;
+        const { dbevents, slotInfoStart, slotInfoEnd } = this.state;
         const currentID = this.props.location.state.doctorId;
         {dbevents && Object.keys(dbevents).map(dbeventID => (
             dbeventID === currentID && Object.values(dbevents[dbeventID]).forEach((item, index) => {
@@ -87,7 +93,7 @@ var backgroundColor = '#' + 'EFACAE';
  {this.props.location.state.doctorName} 
  {this.props.location.state.doctorRole} 
  {this.props.location.state.doctorAvatar}
- {console.log(addedEvents)}
+ {/* {console.log(addedEvents)} */}
  {/* {dbevents && Object.keys(dbevents).map(dbeventID => (
     dbeventID === currentID && Object.values(dbevents[dbeventID]).forEach((item, index) => {
         item.end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s')),
@@ -121,7 +127,13 @@ var backgroundColor = '#' + 'EFACAE';
       />
         </OffCanvasBody>
         <OffCanvasMenu className={"calendar_placeholder"} style={{top: '180px', padding: '20px', boxSizing: 'border-box'}}>
-          <DoctorPlaceholder handleClickBack={this.handleClickBack} />
+          <DoctorPlaceholder 
+          handleClickBack={this.handleClickBack} 
+          doctorName={this.props.location.state.doctorName}
+          currentID={currentID}
+          slotInfoStart={slotInfoStart}
+          slotInfoEnd={slotInfoEnd}
+          />
         </OffCanvasMenu>
       </OffCanvas>
 </div>
