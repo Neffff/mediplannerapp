@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {db, doCreateEvent} from '../firebase';
+// import {db, doCreateEvent} from '../firebase';
 import * as firebase from 'firebase';
 import Button from 'material-ui/Button';
 import '../styles/DoctorPlaceholder.css'
@@ -16,14 +16,11 @@ class DoctorPlaceholder extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        //zjada cpu
-            
+            if (this.props.slotInfoEnd !== nextProps.slotInfoEnd) {
+            console.log(this.props.slotInfoEnd, nextProps.slotInfoEnd);
             this.setState( { start: moment(nextProps.slotInfoStart).format('YYYY-M-DD-H-m-s')});
             this.setState( { end: moment(nextProps.slotInfoEnd).format('YYYY-M-DD-H-m-s')});
-            console.log(this.props);
-        
-       
-        
+        } 
     }
 
     onSubmit = (event) => {
@@ -37,13 +34,10 @@ class DoctorPlaceholder extends Component {
         end: this.state.end
         }
         itemsRef.push(item);
-
     }
 
     render() {
-        // {
-        //     this.props.slotInfoStart & this.props.slotInfoEnd && console.log(moment(this.props.slotInfoStart).format('YYYY-M-DD-H-m-s'), moment(this.props.slotInfoEnd).format('YYYY-M-DD-H-m-s'))
-        // }
+        const {update} = this.props;
         return (
 
             <Card>
@@ -54,7 +48,7 @@ class DoctorPlaceholder extends Component {
                     <p>Wizyta lekarska z {this.props.doctorName}</p>
                     <p>{this.props.slotInfoStart && moment(this.props.slotInfoStart).format('DD MMMM YYYY, [godzina] H:mm')}</p>
                     <form onSubmit={this.onSubmit}>
-                        <Button raised color="primary" type="submit">
+                        <Button onClick={update} raised color="primary" type="submit">
                             Zarezerwuj</Button>
                     </form>
                 </div>

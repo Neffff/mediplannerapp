@@ -52,13 +52,13 @@ componentDidMount() {
         this.setState(() => ({ dbevents: snapshot.val()} ))
       )
   }
-  componentDidUpdate() {
+  update(){
     db.onceGetEvents().then(snapshot =>
       this.setState(() => ({ dbevents: snapshot.val()} ))
     )
   }
   eventStyleGetter(event, start, end, isSelected) {
-var backgroundColor = '#' + 'EFACAE';
+var backgroundColor = '#EFACAE';
     var style = {
         backgroundColor: backgroundColor,
         borderRadius: '0px',
@@ -93,14 +93,7 @@ var backgroundColor = '#' + 'EFACAE';
  {this.props.location.state.doctorName} 
  {this.props.location.state.doctorRole} 
  {this.props.location.state.doctorAvatar}
- {/* {console.log(addedEvents)} */}
- {/* {dbevents && Object.keys(dbevents).map(dbeventID => (
-    dbeventID === currentID && Object.values(dbevents[dbeventID]).forEach((item, index) => {
-        item.end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s')),
-        item.start = new Date(moment(item.start, 'YYYY-M-DD-H-m-s'))})
-  ))} */}
-  {/* {console.log(dbevents)}
-  {console.log((dbevents && Object.keys(dbevents).map(id => 
+  {/* {console.log((dbevents && Object.keys(dbevents).map(id => 
     (id === currentID && console.log(dbevents[id])))))} */}
  </p>
  <OffCanvas width={600} transitionDuration={300} isMenuOpened={this.state.isMenuOpened} position={"right"}>
@@ -110,16 +103,9 @@ var backgroundColor = '#' + 'EFACAE';
         messages={this.state.messages}
         selectable={'ignoreEvents'}
         views={{week: true}}
-          defaultView={'week'}
-        // onSelecting={(e) => false}
+        defaultView={'week'}
         min={minTime}
         max={maxTime}
-        // onNavigate={(date, view) => {
-        //     console.log('#### onNavigate');
-        //     console.log('#### date=', date);
-        //     console.log('#### view=', view);
-        //     //this.setState({currentDate: date});
-        //   }}
         startAccessor='start'
         endAccessor='end'
         eventPropGetter={(this.eventStyleGetter)}
@@ -133,6 +119,8 @@ var backgroundColor = '#' + 'EFACAE';
           currentID={currentID}
           slotInfoStart={slotInfoStart}
           slotInfoEnd={slotInfoEnd}
+          // onSubmitClick={this.updateDbEvents}
+          update={this.update.bind(this)}
           />
         </OffCanvasMenu>
       </OffCanvas>
