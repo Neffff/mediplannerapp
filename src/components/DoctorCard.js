@@ -33,13 +33,10 @@ class DoctorCard extends Component {
           state: { doctorId: `${key}`,
           doctorName: `${doctors[key].name}`,
           doctorRole: `${doctors[key].role}`,
-          doctorAvatar: `${doctors[key].avatar}`,
-          // doctorEventTitle: `${doctors[key].events.title}`,
-          // doctorEventStart: `${doctors[key].events.start}`,
-          // doctorEventEnd: `${doctors[key].events.end}`
+          doctorAvatar: `${doctors[key].avatar}`
         } 
           }}><Button dense color="primary">
-          Umów się na wizyte
+          Umów się na wizytę
         </Button></Link>
       </CardActions>
     </Card>

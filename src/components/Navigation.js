@@ -32,8 +32,8 @@ Navigation.contextTypes = {
 
 const NavigationAuth = () =>
   <ul>
-    <li><Link to={routes.LANDING}><Button raised type="button">Landing</Button></Link></li>
-    <li><Link to={routes.HOME}><Button raised type="button">Home</Button></Link></li>
+    <li><Link to={routes.LANDING}><Button raised type="button">Strona główna</Button></Link></li>
+    <li><Link to={routes.HOME}><Button raised type="button">Umów wizytę</Button></Link></li>
     <li><Link to={routes.ACCOUNT}><Button raised type="button">Konto</Button></Link></li>
     <li><SignOutButton /></li>
   </ul>

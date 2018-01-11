@@ -7,14 +7,11 @@ import moment from 'moment';
 import localization from 'moment/locale/pl'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import '../styles/DoctorCalendar.css'
+import Dialog, { DialogActions, DialogTitle } from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 import { db } from '../firebase';
-
+import * as config from '../constants/config';
 BigCalendar.momentLocalizer(moment);
-
-const minTime = new Date();
-    minTime.setHours(8,0,0);
-    const maxTime = new Date();
-    maxTime.setHours(18,0,0);
 
 class DoctorCalendar extends Component {
     constructor(props) {
@@ -25,22 +22,12 @@ class DoctorCalendar extends Component {
             dbevents: null,
             slotInfoStart: null,
             slotInfoEnd: null,
-             messages:  {
-                date: 'Data',
-                time: 'Teraz',
-                event: 'Wizyta',
-                allDay: '',
-                next:">",
-                previous:"<",
-                today:"Dzisiaj",
-                month: "miesiąc",
-                week: "tydzień",
-                day: "dzień",
-                agenda: "terminarz"
-            }
+            isDialogOpened: false,
         };
         this.selectBigCalendarSlot = this.selectBigCalendarSlot.bind(this);
         this.handleClickBack = this.handleClickBack.bind(this);
+        this.handleClickDialogOpen = this.handleClickDialogOpen.bind(this);
+        this.handleDialogClose = this.handleDialogClose.bind(this);
       }
       componentWillMount() {
         // sets the initial state
@@ -72,14 +59,23 @@ var backgroundColor = '#EFACAE';
     };
   }
   selectBigCalendarSlot(slotInfo) {
-    this.setState({ isMenuOpened: true });
-    this.setState({ slotInfoStart: slotInfo.start});
-    this.setState({ slotInfoEnd: slotInfo.end});
+    slotInfo.start > new Date ? (
+    this.setState({ isMenuOpened: true }),
+    this.setState({ slotInfoStart: slotInfo.start}),
+    this.setState({ slotInfoEnd: slotInfo.end})
+    ) : (
+      this.handleClickDialogOpen())
   }
   handleClickBack() {
-    // toggles the menu opened state
     this.setState({ isMenuOpened: false });
-  }
+  };
+  handleClickDialogOpen() {
+    this.setState({ isDialogOpened: true });
+  };
+  handleDialogClose() {
+    this.setState({ isDialogOpened: false });
+  };
+
     render() {
         const { dbevents, slotInfoStart, slotInfoEnd } = this.state;
         const currentID = this.props.location.state.doctorId;
@@ -88,19 +84,19 @@ var backgroundColor = '#EFACAE';
                 item.end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s')),
                 item.start = new Date(moment(item.start, 'YYYY-M-DD-H-m-s'))})
           ))}
-        return (        
+        return (
 <div className="info__container">
  <DoctorInfo doctorAvatar={this.props.location.state.doctorAvatar} doctorName={this.props.location.state.doctorName} doctorRole={this.props.location.state.doctorRole} />
  <OffCanvas width={600} transitionDuration={300} isMenuOpened={this.state.isMenuOpened} position={"right"}>
         <OffCanvasBody className={"calendar_body"}>
  <BigCalendar
         events={dbevents ? Object.values(dbevents[currentID]) : []}
-        messages={this.state.messages}
+        messages={config.messages}
         selectable={'ignoreEvents'}
         views={{week: true}}
         defaultView={'week'}
-        min={minTime}
-        max={maxTime}
+        min={config.minTime}
+        max={config.maxTime}
         startAccessor='start'
         endAccessor='end'
         eventPropGetter={(this.eventStyleGetter)}
@@ -119,11 +115,23 @@ var backgroundColor = '#EFACAE';
           />
         </OffCanvasMenu>
       </OffCanvas>
+      <div>
+        <Dialog
+          open={this.state.isDialogOpened}
+          onClose={this.handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Termin wybranej wizyty minął, prosimy wybrać inną date."}</DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleDialogClose} color="primary" autoFocus>
+              Zrozumiałem
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
 </div>
 )
-}
-}
-
-
-
+};
+};
   export default DoctorCalendar;
