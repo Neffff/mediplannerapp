@@ -1,0 +1,24 @@
+.signUp__container {
+    max-width: 400px;
+    padding: 15px;
+    flex-flow: row wrap;
+    text-align: center;
+    border-radius: 5px!important;
+}
+.signUp__container h1 {
+    color: #4886ff;
+    text-align: center;
+}
+
+.signUp_input {
+    flex-grow: 1;
+    width: 80%;
+    margin-bottom: 20px;
+}
+.signUp__center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    top: 30vh;
+}

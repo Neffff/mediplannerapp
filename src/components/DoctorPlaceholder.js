@@ -16,22 +16,28 @@ class DoctorPlaceholder extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-            if (this.props.slotInfoEnd !== nextProps.slotInfoEnd) {
-            console.log(this.props.slotInfoEnd, nextProps.slotInfoEnd);
-            this.setState( { start: moment(nextProps.slotInfoStart).format('YYYY-M-DD-H-m-s')});
-            this.setState( { end: moment(nextProps.slotInfoEnd).format('YYYY-M-DD-H-m-s')});
-        } 
+        if (this.props.slotInfoEnd !== nextProps.slotInfoEnd) {
+            // console.log(this.props.slotInfoEnd, nextProps.slotInfoEnd);
+            this.setState({
+                start: moment(nextProps.slotInfoStart).format('YYYY-M-DD-H-m-s')
+            });
+            this.setState({
+                end: moment(nextProps.slotInfoEnd).format('YYYY-M-DD-H-m-s')
+            });
+        }
     }
 
     onSubmit = (event) => {
         const {
-            id = this.props.currentID,
+            id = this.props.currentID
         } = this.state;
-        const itemsRef = firebase.database().ref(`events/${id}`);
+        const itemsRef = firebase
+            .database()
+            .ref(`events/${id}`);
         event.preventDefault();
         const item = {
-        start: this.state.start,
-        end: this.state.end
+            start: this.state.start,
+            end: this.state.end
         }
         itemsRef.push(item);
     }
@@ -40,7 +46,7 @@ class DoctorPlaceholder extends Component {
         const {update} = this.props;
         return (
 
-            <Card>
+            <Card className="placeholder__card">
                 <div className="placeholder__container">
                     <Button raised onClick={this.props.handleClickBack}>
                         Wróć

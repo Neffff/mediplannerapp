@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import { OffCanvas, OffCanvasMenu, OffCanvasBody } from 'react-offcanvas';
 import DoctorPlaceholder from './DoctorPlaceholder';
+import DoctorInfo from './DoctorInfo';
 import moment from 'moment';
 import localization from 'moment/locale/pl'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -89,15 +90,9 @@ var backgroundColor = '#EFACAE';
           ))}
         return (        
 <div className="info__container">
- <p>Doctor Info {this.props.location.state.doctorId} 
- {this.props.location.state.doctorName} 
- {this.props.location.state.doctorRole} 
- {this.props.location.state.doctorAvatar}
-  {/* {console.log((dbevents && Object.keys(dbevents).map(id => 
-    (id === currentID && console.log(dbevents[id])))))} */}
- </p>
+ <DoctorInfo doctorAvatar={this.props.location.state.doctorAvatar} doctorName={this.props.location.state.doctorName} doctorRole={this.props.location.state.doctorRole} />
  <OffCanvas width={600} transitionDuration={300} isMenuOpened={this.state.isMenuOpened} position={"right"}>
-        <OffCanvasBody className={"my_body_class"}>
+        <OffCanvasBody className={"calendar_body"}>
  <BigCalendar
         events={dbevents ? Object.values(dbevents[currentID]) : []}
         messages={this.state.messages}
@@ -112,7 +107,7 @@ var backgroundColor = '#EFACAE';
         onSelectSlot={this.selectBigCalendarSlot}
       />
         </OffCanvasBody>
-        <OffCanvasMenu className={"calendar_placeholder"} style={{top: '180px', padding: '20px', boxSizing: 'border-box'}}>
+        <OffCanvasMenu className={"calendar_placeholder"} style={{top: '345px', padding: '20px', boxSizing: 'border-box'}}>
           <DoctorPlaceholder 
           handleClickBack={this.handleClickBack} 
           doctorName={this.props.location.state.doctorName}

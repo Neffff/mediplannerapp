@@ -7,15 +7,20 @@ import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 import Input from 'material-ui/Input';
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
+import '../styles/SignIn.css'
 
 const SignInPage = ({ history }) =>
+<div className="signIn__center">
+<Paper className="signIn__container" elevation={2}>
   <div>
-    <h1>SignIn</h1>
+    <h1>Zaloguj się!</h1>
     <SignInForm history={history} />
     <PasswordForgetLink />
     <SignUpLink />
   </div>
-
+</Paper>
+</div>
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -67,15 +72,18 @@ class SignInForm extends Component {
       email === '';
 
     return (
+
       <form onSubmit={this.onSubmit}>
         <Input
           value={email}
+          className="signIn__input"
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Adres E-mail"
         />
         <Input
           value={password}
+          className="signIn__input"
           onChange={event => this.setState(byPropKey('password', event.target.value))}
           type="password"
           placeholder="Hasło"
@@ -89,6 +97,7 @@ class SignInForm extends Component {
 
         { error && <p>{error.message}</p> }
       </form>
+      
     );
   }
 }

@@ -1,3 +1,6 @@
 .placeholder__container {
     padding: 20px;
 }
+.placeholder__card {
+    border-radius: 5px!important;
+}

@@ -29,31 +29,31 @@ class HomePage extends Component {
   render() {
     const { users, doctors, events } = this.state;
     return (
-      <div>
+      <div className="home__container">
         <h1 className="home__h1">Wybierz lekarza i umów się na wizytę</h1>
         <div className="home__cards">
     {!!doctors && <DoctorCard doctors={doctors} events={events}/>}
 </div>
 
-         <p>The Home Page is accessible by every signed in user.</p>
+         {/* <p>The Home Page is accessible by every signed in user.</p>
 
-        { !!users && <UserList users={users} /> }
+        { !!users && <UserList users={users} /> } */}
 
       </div>
     );
   }
 }
 
-const UserList = ({ users }) =>
-  <div>
-    <h2>Lista nazw użytkowników:</h2>
-    <p>(Saved on Sign Up in Firebase Database)</p>
+// const UserList = ({ users }) =>
+//   <div>
+//     <h2>Lista nazw użytkowników:</h2>
+//     <p>(Saved on Sign Up in Firebase Database)</p>
 
-    {Object.keys(users).map(key =>
-      <div key={key}>{users[key].username}</div>
-    )}
+//     {Object.keys(users).map(key =>
+//       <div key={key}>{users[key].username}</div>
+//     )}
     
-  </div>
+//   </div>
 
 const authCondition = (authUser) => !!authUser;
 

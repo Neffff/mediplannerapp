@@ -12,7 +12,7 @@ import '../styles/Navigation.css';
 
 const Navigation = (props, { authUser }) =>
   <div className="menu__container">
-    <AppBar position="static" color="default">
+    <AppBar className="menu__appbar"position="static" color="default">
         <Toolbar>
           <Typography type="title" color="inherit">
             <p className="logo">Mediplanner</p>

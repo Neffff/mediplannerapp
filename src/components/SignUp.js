@@ -5,12 +5,17 @@ import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 import Input from 'material-ui/Input';
 import Button from 'material-ui/Button';
-
+import Paper from 'material-ui/Paper';
+import '../styles/SignUp.css'
 const SignUpPage = ({ history }) =>
+<div className="signUp__center">
+<Paper className="signUp__container" elevation={2}>
   <div>
-    <h1>SignUp</h1>
+    <h1>Zarejestruj się!</h1>
     <SignUpForm history={history} />
   </div>
+  </Paper>
+</div>
 const INITIAL_STATE = {
     username: '',
     email: '',
@@ -83,30 +88,35 @@ class SignUpForm extends Component {
       <form onSubmit={this.onSubmit}>
          <Input
           value={username}
+          className="signUp_input"
           onChange={event => this.setState(byPropKey('username', event.target.value))}
           type="text"
           placeholder="Imię i nazwisko"
         />
         <Input
           value={email}
+          className="signUp_input"
           onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Adres E-mail"
         />
         <Input
           value={phone}
+          className="signUp_input"
           onChange={event => this.setState(byPropKey('phone', event.target.value))}
           type="text"
           placeholder="Numer telefonu"
         />
         <Input
           value={passwordOne}
+          className="signUp_input"
           onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
           type="password"
           placeholder="Hasło"
         />
         <Input
           value={passwordTwo}
+          className="signUp_input"
           onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
           type="password"
           placeholder="Potwierdź hasło"

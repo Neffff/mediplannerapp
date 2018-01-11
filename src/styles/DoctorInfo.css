@@ -1,0 +1,21 @@
+.doctorInfo_container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0px 20px 20px;
+    border-radius: 5px!important;
+}
+.doctorInfo_info {
+  flex: 0 0 50%;
+  padding: 40px!important;
+}
+.doctorInfo_avatar {
+    
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+  flex: 0 0 50%;
+}
