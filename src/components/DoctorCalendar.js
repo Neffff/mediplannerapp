@@ -23,6 +23,7 @@ class DoctorCalendar extends Component {
             slotInfoStart: null,
             slotInfoEnd: null,
             isDialogOpened: false,
+            dialogContent: null,
         };
         this.selectBigCalendarSlot = this.selectBigCalendarSlot.bind(this);
         this.handleClickBack = this.handleClickBack.bind(this);
@@ -59,12 +60,17 @@ var backgroundColor = '#EFACAE';
     };
   }
   selectBigCalendarSlot(slotInfo) {
-    slotInfo.start > new Date ? (
-    this.setState({ isMenuOpened: true }),
-    this.setState({ slotInfoStart: slotInfo.start}),
-    this.setState({ slotInfoEnd: slotInfo.end})
-    ) : (
-      this.handleClickDialogOpen())
+        (slotInfo.start.getDay() === 0 || slotInfo.start.getDay() === 6) ? (
+          this.setState({ dialogContent: 'Wybrany termin to weekend, przychodnia jest nieczynna.'}),
+          this.handleClickDialogOpen()
+        ) : (slotInfo.start > new Date()) ? (
+          this.setState({ isMenuOpened: true }),
+          this.setState({ slotInfoStart: slotInfo.start}),
+          this.setState({ slotInfoEnd: slotInfo.end})
+        ) : (
+          this.setState({ dialogContent: 'Termin wybranej wizyty minął, prosimy wybrać inną date.'}),
+          this.handleClickDialogOpen())
+      
   }
   handleClickBack() {
     this.setState({ isMenuOpened: false });
@@ -77,11 +83,11 @@ var backgroundColor = '#EFACAE';
   };
 
     render() {
-        const { dbevents, slotInfoStart, slotInfoEnd } = this.state;
+        const { dbevents, slotInfoStart, slotInfoEnd, dialogContent, isDialogOpened } = this.state;
         const currentID = this.props.location.state.doctorId;
         {dbevents && Object.keys(dbevents).map(dbeventID => (
             dbeventID === currentID && Object.values(dbevents[dbeventID]).forEach((item, index) => {
-                item.end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s')),
+                item.end = new Date(moment(item.end, 'YYYY-M-DD-H-m-s'));
                 item.start = new Date(moment(item.start, 'YYYY-M-DD-H-m-s'))})
           ))}
         return (
@@ -117,12 +123,12 @@ var backgroundColor = '#EFACAE';
       </OffCanvas>
       <div>
         <Dialog
-          open={this.state.isDialogOpened}
+          open={isDialogOpened}
           onClose={this.handleDialogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Termin wybranej wizyty minął, prosimy wybrać inną date."}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{dialogContent}</DialogTitle>
           <DialogActions>
             <Button onClick={this.handleDialogClose} color="primary" autoFocus>
               Zrozumiałem

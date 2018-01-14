@@ -1,59 +1,92 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import * as firebase from 'firebase';
-import { PasswordForgetForm } from './PasswordForget';
+import {PasswordForgetForm} from './PasswordForget';
 import PasswordChangeForm from './PasswordChange';
 import withAuthorization from './withAuthorization';
-import { db } from '../firebase';
-
+import {db} from '../firebase';
+import Paper from 'material-ui/Paper';
+import moment from 'moment';
 
 class AccountPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: null,
-      users: null,
       user: null,
+      eventsUser: null,
+      doctors: null,
     };
+// this.deleteEvent = this.deleteEvent.bind(this);
   }
-componentDidMount() {
- this.setState({ currentUser: firebase.auth().currentUser.uid})
- db.onceGetUsers().then(snapshot =>
-  this.setState(() => ({ users: snapshot.val()} ))
-);
-this.state.users & this.state.user && this.setState({user: this.state.users[this.state.currentUser]})
-}
-// db.ref('users').once('value');
-// componentDidMount() {
-//   db.onceGetEvents().then(snapshot =>
-//       this.setState(() => ({ dbevents: snapshot.val()} ))
-//     )
-// }
-// export const onceGetUsers = () =>
-//   db.ref('users').once('value');
+  componentWillMount() {
+    this.setState({
+      currentUser: firebase
+        .auth()
+        .currentUser
+        .uid
+    })
+  }
+  componentDidMount() {
+    db
+      .onceGetUser(this.state.currentUser)
+      .then(snapshot => this.setState(() => ({
+        user: snapshot.val()
+      })))
 
+      db.onceGetUserEvents(this.state.currentUser).then(snapshot =>
+      this.setState({ eventsUser: snapshot.val() }))
+      db.onceGetDoctors().then(snapshot =>
+        this.setState(() => ({ doctors: snapshot.val()} ))
+      );
+  }
+deleteEvent(key) {
+  let showItem = this.state.eventsUser[key].doctor;
+  console.log(showItem);
+  console.log(key)
+  db.onceDeleteEvent(this.state.currentUser, key, this.state.eventsUser[key].doctor);
+  db.onceGetUserEvents(this.state.currentUser).then(snapshot =>
+    this.setState({ eventsUser: snapshot.val() }))
+}
   render() {
-
-return (
-<div>
-      {/* <h1>Konto: {authUser.email}</h1> */}
-     <PasswordForgetForm />
-     <PasswordChangeForm />
-     {/* {this.state.currentUser}
-     {this.state.users  & this.state.currentUser != null && console.log('xd')} */}
-     {/* {this.state.users ? console.log(Object.values(this.state.users[this.state.currenUser].email)) : <p></p>} */}
-     {/* dbevents ? Object.values(dbevents[currentID]) : [] */}
-  </div>
-);
+    const { user, eventsUser, doctors } = this.state;
+    return (
+      <div>
+        <Paper>
+          <h1>Konto użytkownika: {user && user.username}</h1>
+          <p>Adres e-mail: {user && user.email}</p>
+          <p>Numer telefonu: {user && user.phone}</p>
+        </Paper>
+        <Paper>
+          <p>Twoje przyszłe wizyty:</p>
+          <ul>
+            {(eventsUser && doctors) && Object.keys(eventsUser).map((key) =>
+           (new Date(moment(eventsUser[key].start, 'YYYY-M-DD-H-m-s')) > new Date()) && (<li key={key} id="start">Od: {eventsUser[key].start} 
+             Do: {eventsUser[key].end} 
+             z: {doctors[eventsUser[key].doctor].name}<button onClick={this.deleteEvent.bind(this, key)}>odwołaj wizytę</button></li>))
+               }
+          </ul>
+          </Paper>
+          
+          <Paper>
+          <p>Twoje wizyty, które już się odbyły:</p>
+          <ul>
+          {(eventsUser && doctors) && Object.keys(eventsUser).map((key) =>
+           (new Date(moment(eventsUser[key].start, 'YYYY-M-DD-H-m-s')) < new Date()) && (<li key={key}>Od: {eventsUser[key].start} 
+             Do: {eventsUser[key].end} 
+             z: {doctors[eventsUser[key].doctor].name}</li>))
+               }
+               </ul>
+          </Paper>
+          <Paper>
+          <p>Zapomniałeś hasła?</p>
+          <PasswordForgetForm/>
+          <p>Chcesz zmienić hasło?</p>
+          <PasswordChangeForm/>
+        </Paper>
+      </div>
+    );
+  }
 }
-}    
-// const AccountPage = (props, { authUser }) =>
-//   <div>
-//     <h1>Konto: {authUser.email}</h1>
-//     <PasswordForgetForm />
-//     <PasswordChangeForm />
-//   </div>
-
 
 const authCondition = (authUser) => !!authUser;
 

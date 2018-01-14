@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import {db, doCreateEvent} from '../firebase';
 import * as firebase from 'firebase';
 import Button from 'material-ui/Button';
 import '../styles/DoctorPlaceholder.css'
@@ -8,16 +7,15 @@ import moment from 'moment';
 class DoctorPlaceholder extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             start: null,
-            end: null
+            end: null,
+            currentUser: null,
         };
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.slotInfoEnd !== nextProps.slotInfoEnd) {
-            // console.log(this.props.slotInfoEnd, nextProps.slotInfoEnd);
             this.setState({
                 start: moment(nextProps.slotInfoStart).format('YYYY-M-DD-H-m-s')
             });
@@ -26,7 +24,9 @@ class DoctorPlaceholder extends Component {
             });
         }
     }
-
+    componentWillMount() {
+        this.setState({ currentUser: firebase.auth().currentUser.uid})
+      }
     onSubmit = (event) => {
         const {
             id = this.props.currentID
@@ -39,7 +39,18 @@ class DoctorPlaceholder extends Component {
             start: this.state.start,
             end: this.state.end
         }
-        itemsRef.push(item);
+        let itemPushed = itemsRef.push(item);
+        console.log(itemPushed.key);
+
+        const itemUser = {
+            start: this.state.start,
+            end: this.state.end,
+            doctor: id,
+        }
+        const itemsRefUser = firebase
+        .database()
+        .ref(`eventUser/${this.state.currentUser}/${itemPushed.key}`);
+        itemsRefUser.set(itemUser);
     }
 
     render() {

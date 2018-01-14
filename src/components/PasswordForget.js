@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Input from 'material-ui/Input';
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 import { auth } from '../firebase';
 
 const PasswordForgetPage = () =>
-  <div>
-    <h1>PasswordForget</h1>
+<div className="signIn__center">
+<Paper className="signIn__container" elevation={2}>
+    <h1>Zapomniałeś hasła?</h1>
     <PasswordForgetForm />
+    </Paper>
   </div>
-
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
