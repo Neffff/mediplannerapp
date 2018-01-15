@@ -1,6 +1,10 @@
 .info__container {
     height: 700px;
 }
+.calendar__top {
+    display: flex;
+    justify-content: space-around;
+}
 .calendar_placeholder {
     top: 20px;
 }

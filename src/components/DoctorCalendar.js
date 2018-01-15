@@ -3,6 +3,7 @@ import BigCalendar from 'react-big-calendar';
 import { OffCanvas, OffCanvasMenu, OffCanvasBody } from 'react-offcanvas';
 import DoctorPlaceholder from './DoctorPlaceholder';
 import DoctorInfo from './DoctorInfo';
+import DoctorLegend from './DoctorLegend';
 import moment from 'moment';
 import localization from 'moment/locale/pl'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -30,12 +31,6 @@ class DoctorCalendar extends Component {
         this.handleClickDialogOpen = this.handleClickDialogOpen.bind(this);
         this.handleDialogClose = this.handleDialogClose.bind(this);
       }
-      componentWillMount() {
-        // sets the initial state
-        this.setState({
-          isMenuOpened: false
-        })
-      }
 componentDidMount() {
     db.onceGetEvents().then(snapshot =>
         this.setState(() => ({ dbevents: snapshot.val()} ))
@@ -59,6 +54,12 @@ var backgroundColor = '#EFACAE';
         style: style
     };
   }
+  slotStyleGetter(event, start, end, isSelected) {
+        const style = { backgroundColor: '#f6f6f6' };
+if (event < new Date() || event.getDay() === 0 || event.getDay() === 6) return {
+  style: style
+};
+}
   selectBigCalendarSlot(slotInfo) {
         (slotInfo.start.getDay() === 0 || slotInfo.start.getDay() === 6) ? (
           this.setState({ dialogContent: 'Wybrany termin to weekend, przychodnia jest nieczynna.'}),
@@ -70,7 +71,6 @@ var backgroundColor = '#EFACAE';
         ) : (
           this.setState({ dialogContent: 'Termin wybranej wizyty minął, prosimy wybrać inną date.'}),
           this.handleClickDialogOpen())
-      
   }
   handleClickBack() {
     this.setState({ isMenuOpened: false });
@@ -92,7 +92,10 @@ var backgroundColor = '#EFACAE';
           ))}
         return (
 <div className="info__container">
+<div className="calendar__top">
  <DoctorInfo doctorAvatar={this.props.location.state.doctorAvatar} doctorName={this.props.location.state.doctorName} doctorRole={this.props.location.state.doctorRole} />
+ <DoctorLegend />
+ </div>
  <OffCanvas width={600} transitionDuration={300} isMenuOpened={this.state.isMenuOpened} position={"right"}>
         <OffCanvasBody className={"calendar_body"}>
  <BigCalendar
@@ -105,6 +108,7 @@ var backgroundColor = '#EFACAE';
         max={config.maxTime}
         startAccessor='start'
         endAccessor='end'
+        slotPropGetter={(e) => this.slotStyleGetter(e)}
         eventPropGetter={(this.eventStyleGetter)}
         onSelectSlot={this.selectBigCalendarSlot}
       />
@@ -116,7 +120,6 @@ var backgroundColor = '#EFACAE';
           currentID={currentID}
           slotInfoStart={slotInfoStart}
           slotInfoEnd={slotInfoEnd}
-          // onSubmitClick={this.updateDbEvents}
           update={this.update.bind(this)}
           />
         </OffCanvasMenu>

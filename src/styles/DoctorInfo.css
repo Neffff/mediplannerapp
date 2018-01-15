@@ -12,10 +12,9 @@
   padding: 40px!important;
 }
 .doctorInfo_avatar {
-    
     min-width: 80px;
     min-height: 80px;
     max-width: 80px;
     max-height: 80px;
-  flex: 0 0 50%;
+    flex: 0 0 50%;
 }
