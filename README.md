@@ -1,6 +1,6 @@
 # MediplannerApp
 
-Project created for the needs of engineering work.
+Mediplanner allows registration in a medical facility. Project created for the needs of engineering work.
 
 ## Getting Started
 
@@ -36,6 +36,7 @@ npm run build
 
 * [React](https://github.com/facebook/react) - JavaScript Library
 * [React-Big-Calendar](https://github.com/intljusticemission/react-big-calendar) - Events calendar component
+* [Firebase](https://firebase.google.com/) - Realtime database with Auth
 * [Material-UI](https://material-ui-next.com/) - React components
 
 
