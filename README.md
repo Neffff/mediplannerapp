@@ -14,9 +14,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-Install node and npm
-Navigate to root project directory
-Install all the packages
+* Install node and npm
+* Navigate to root project directory
+* Install all the packages
 ```
 npm install
 ```
