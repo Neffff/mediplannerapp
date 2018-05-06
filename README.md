@@ -40,6 +40,6 @@ npm run build
 * [Material-UI](https://material-ui-next.com/) - React components
 
 
-## Authors
+## Author
 
 * **Szymon Niemiec**
